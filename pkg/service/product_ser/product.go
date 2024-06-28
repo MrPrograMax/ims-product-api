@@ -23,8 +23,8 @@ func NewProductService(pr repository.Product, cat repository.Category, loc repos
 	}
 }
 
-func (s *ProductService) Create(product model.ProductDTO) (int64, error) {
-	return s.repo.Create(product.ToProduct())
+func (s *ProductService) Create(product model.Product) (int64, error) {
+	return s.repo.Create(product)
 }
 
 func (s *ProductService) Update(id int64, product model.UpdateProduct) error {

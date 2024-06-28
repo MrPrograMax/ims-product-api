@@ -7,7 +7,7 @@ import (
 )
 
 type Product interface {
-	Create(product model.ProductDTO) (int64, error)
+	Create(product model.Product) (int64, error)
 	Update(id int64, product model.UpdateProduct) error
 	Delete(id int64) error
 

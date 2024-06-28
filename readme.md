@@ -69,19 +69,9 @@ go run cmd/main.go
   "name": "kartoshka",
   "quantity": 1,
   "description": "desc",
-  "category": {
-    "id": 1,
-    "name": "food"
-  },
-  "location": {
-    "id": 1,
-    "row": "section 18",
-    "place": "place 22"
-  },
-  "status": {
-    "id": 1,
-    "name": "active"
-  }
+  "category_id": 1,
+  "location_id": 1,
+  "status_id": 1
 }
 ```
 

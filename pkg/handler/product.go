@@ -7,7 +7,7 @@ import (
 )
 
 func (h *Handler) addProduct(c *gin.Context) {
-	var product model.ProductDTO
+	var product model.Product
 	if err := c.BindJSON(&product); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
