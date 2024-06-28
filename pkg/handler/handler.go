@@ -18,7 +18,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	product := router.Group("/product")
 	{
-		product.POST("/add", h.addProduct)
+		product.POST("", h.addProduct)
 
 		product.GET("/name/:name", h.findProductByName)
 		product.GET("/id/:id", h.findProductById)
@@ -44,7 +44,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 		location := product.Group("/location")
 		{
-			location.POST("/add", h.addLocation)
+			location.POST("", h.addLocation)
 
 			location.GET("/row/:row/place/:place", h.findLocationByRowAndPlace)
 			location.GET("/id/:id", h.findLocationById)

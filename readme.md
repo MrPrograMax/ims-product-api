@@ -61,7 +61,7 @@ go run cmd/main.go
 
 ### Добавление продукта
 
-`POST` /product/add<br>
+`POST` /product<br>
 Ожидаемый формат входных данных:
 
 ```json
@@ -165,7 +165,7 @@ go run cmd/main.go
 
 ### Получение всех продуктов
 
-`GET` /product/<br>
+`GET` /product<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -516,7 +516,7 @@ go run cmd/main.go
 
 ### Получение списка категорий
 
-`GET` /product/category/<br>
+`GET` /product/category<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -579,7 +579,7 @@ go run cmd/main.go
 
 ### Добавление локации
 
-`POST` /product/location/add<br>
+`POST` /product/location<br>
 Ожидаемый формат входных данных:
 
 ```json
@@ -651,7 +651,7 @@ go run cmd/main.go
 
 ### Получение списка всех локаций
 
-`GET` /product/location/<br>
+`GET` /product/location<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -723,7 +723,7 @@ go run cmd/main.go
 
 ### Получение списка статусов продукта
 
-`GET` /product/status/<br>
+`GET` /product/status<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
