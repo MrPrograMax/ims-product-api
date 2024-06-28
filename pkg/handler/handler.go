@@ -24,12 +24,14 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		product.GET("/id/:id", h.findProductById)
 
 		product.GET("/", h.getProducts)
+		//wrong paths
 		//product.GET("/category/:id", h.findProductsByCategoryId)
 		//product.GET("/category/:name", h.findProductByCategoryName)
 		product.GET("/loc", h.findProductByLocation)
 		product.GET("/loc/:id", h.findProductsByLocationId)
-		product.GET("/status/:name", h.findProductByStatusName)
-		product.GET("/status/:id", h.findProductsByStatusId)
+		//wrong paths
+		//product.GET("/status/:name", h.findProductByStatusName)
+		//product.GET("/status/:id", h.findProductsByStatusId)
 
 		product.PUT("/:id", h.updateProduct)
 
