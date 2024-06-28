@@ -7,7 +7,7 @@ import (
 	"ims-product-api/model"
 )
 
-const productsStatusTable = "products_status"
+const productsStatusTable = "product_status"
 
 type ProductStatus struct {
 	db *sqlx.DB
