@@ -53,8 +53,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 			location.GET("/", h.getLocations)
 			location.GET("/row/:row", h.findLocationByRow)
+			//implemented twice. "/product/:id"
+			//product.DELETE("/:id", h.deleteLocation)
+			//new
+			location.DELETE("/:id", h.deleteLocation)
 
-			product.DELETE("/:id", h.deleteLocation)
 		}
 
 		status := product.Group("/status")
