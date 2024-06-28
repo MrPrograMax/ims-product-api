@@ -5,10 +5,11 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	api "ims-authentication-api"
-	"ims-authentication-api/pkg/handler"
-	"ims-authentication-api/pkg/repository"
-	"ims-authentication-api/pkg/service"
+	api "ims-product-api"
+	"ims-product-api/pkg/handler"
+	"ims-product-api/pkg/repository"
+	"ims-product-api/pkg/repository/postgres"
+	"ims-product-api/pkg/service"
 	"os"
 )
 
@@ -23,7 +24,7 @@ func main() {
 		logrus.Fatalf("error loading env variables: %s", err.Error())
 	}
 
-	db, err := repository.NewPostgresDB(repository.Config{
+	db, err := postgres.NewPostgresDB(postgres.Config{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
@@ -35,18 +36,18 @@ func main() {
 		logrus.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
-	repos := repository.NewRepository(db)
-	services := service.NewService(repos)
-	handlers := handler.NewHandler(services)
+	repo := repository.NewProductRepository(db)
+	serv := service.NewProductService(repo)
+	hand := handler.NewHandler(serv)
 
 	srv := new(api.Server)
-	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+	if err := srv.Run(viper.GetString("port"), hand.InitRoutes()); err != nil {
 		logrus.Fatalf("error of init server: %s", err)
 	}
 }
 
 func initConfig() error {
-	viper.AddConfigPath("configs")
+	viper.AddConfigPath("config")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }

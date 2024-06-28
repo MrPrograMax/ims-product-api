@@ -1,4 +1,4 @@
-package ims_authentication_api
+package ims_product_api
 
 import (
 	"context"

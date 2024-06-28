@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=qwerty
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ims-authentication-api:
+    build: ./
+    command: ./wait-for-postgres.sh db ./ims-product-api
+    ports:
+      - "8081:8081"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=qwerty
+      - DB_NAME=postgres
+      - DB_SSLMODE=disable
+      - PORT=8081
+
+
