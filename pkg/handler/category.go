@@ -12,7 +12,7 @@ func (h *Handler) getCategories(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, cats)
+	newStatusResponse(c, cats)
 }
 
 func (h *Handler) findCategoryById(c *gin.Context) {
@@ -28,7 +28,7 @@ func (h *Handler) findCategoryById(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, category)
+	newStatusResponse(c, category)
 }
 
 func (h *Handler) findCategoryByName(c *gin.Context) {
@@ -44,5 +44,5 @@ func (h *Handler) findCategoryByName(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, category)
+	newStatusResponse(c, category)
 }

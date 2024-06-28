@@ -1,4 +1,37 @@
 # User Product Service
+
+## Оглавление
+
+- ### [Запуск](#Запуск)
+- ### [1. Продукты](#1-работа-с-продуктом)
+  - [Добавление продукта](#добавление-продукта)
+  - [Поиск по name](#поиск-продукта-по-имени)
+  - [Поиск по id](#поиск-продукта-по-идентификатору)
+  - [Получение всех продуктов](#получение-всех-продуктов)
+  - [Поиск по category id](#поиск-продуктов-по-идентификатору-категории)
+  - [Поиск по category name](#поиск-продуктов-по-имени-категории)
+  - [Поиск по location id](#поиск-продуктов-по-идентификатору-локации)
+  - [Поиск по location](#поиск-продуктов-по-локации)
+  - [Поиск по status name](#поиск-продуктов-по-имени-статуса)
+  - [Поиск по status id](#поиск-продуктов-по-идентификатору-статуса)
+  - [Изменение продукта](#изменение-продукта)
+  - [Удаление продукта](#удаление-продукта)
+- ### [2. Категории](#2-работа-с-категорией)
+  - [Получение всех категорий](#получение-списка-категорий)
+  - [Поиск по name](#получение-категории-по-имени)
+  - [Поиск по id](#получение-категории-по-идентификатору)
+- ### [3. Локации](#3-работа-с-локацией)
+  - [Добавление локации](#добавление-локации)
+  - [Поиск по row и place](#поиск-локации-по-ряду-и-месту)
+  - [Поиск по id](#поиск-локации-по-идентификатору-локации)
+  - [Получение всех локаций](#получение-списка-всех-локаций)
+  - [Поиск всех локаций по row](#получение-списка-локаций-по-ряду)
+  - [Удаление локации](#удаление-локации)
+- ### [4. Статус](#4-работа-со-статусом-продукта)
+  - [Получение всех статусов](#получение-списка-статусов-продукта)
+  - [Поиск по name](#получение-статуса-продукта-по-имени)
+  - [Поиск по id](#получение-статуса-продукта-по-идентификатору)
+
 ## Запуск
 Подгрузка недостающих библиотек
 ```cmd
@@ -6,7 +39,7 @@ go mod tidy
 ```
 Создайте файл .env и добавьте пароль:
 ```yaml
-DB_PASSWORD:qwerty
+DB_PASSWORD=qwerty
 ```
 База данных
 ```cmd
@@ -28,7 +61,7 @@ go run cmd/main.go
 
 ### Добавление продукта
 
-`POST` /product/add<br>
+`POST` /product<br>
 Ожидаемый формат входных данных:
 
 ```json
@@ -36,19 +69,9 @@ go run cmd/main.go
   "name": "kartoshka",
   "quantity": 1,
   "description": "desc",
-  "category": {
-    "id": 1,
-    "name": "food"
-  },
-  "location": {
-    "id": 1,
-    "row": "section 18",
-    "place": "place 22"
-  },
-  "status": {
-    "id": 1,
-    "name": "active"
-  }
+  "category_id": 1,
+  "location_id": 1,
+  "status_id": 1
 }
 ```
 
@@ -142,7 +165,7 @@ go run cmd/main.go
 
 ### Получение всех продуктов
 
-`GET` /product/<br>
+`GET` /product<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -191,7 +214,7 @@ go run cmd/main.go
 
 ### Поиск продуктов по идентификатору категории
 
-`GET` /product/category/1<br>
+`GET` /product/category_id/1<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -229,7 +252,7 @@ go run cmd/main.go
 
 ### Поиск продуктов по имени категории
 
-`GET` /product/category/clothes<br>
+`GET` /product/category_name/clothes<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -267,7 +290,7 @@ go run cmd/main.go
 
 ### Поиск продуктов по идентификатору локации
 
-`GET` /product/loc/1<br>
+`GET` /product/loc_id/1<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -360,7 +383,7 @@ go run cmd/main.go
 
 ### Поиск продуктов по имени статуса
 
-`GET` /product/status/active<br>
+`GET` /product/status_name/active<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -398,7 +421,7 @@ go run cmd/main.go
 
 ### Поиск продуктов по идентификатору статуса
 
-`GET` /product/status/2<br>
+`GET` /product/status_id/2<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -493,7 +516,7 @@ go run cmd/main.go
 
 ### Получение списка категорий
 
-`GET` /product/category/<br>
+`GET` /product/category<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -556,7 +579,7 @@ go run cmd/main.go
 
 ### Добавление локации
 
-`POST` /product/location/add<br>
+`POST` /product/location<br>
 Ожидаемый формат входных данных:
 
 ```json
@@ -628,7 +651,7 @@ go run cmd/main.go
 
 ### Получение списка всех локаций
 
-`GET` /product/location/<br>
+`GET` /product/location<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 
@@ -700,7 +723,7 @@ go run cmd/main.go
 
 ### Получение списка статусов продукта
 
-`GET` /product/status/<br>
+`GET` /product/status<br>
 
 #### <span style="color:#12ff63">200 STATUS: OK
 

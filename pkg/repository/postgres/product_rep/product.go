@@ -129,10 +129,10 @@ func (p *Product) Update(id int64, product model.UpdateProduct) error {
 
 func (p *Product) Delete(id int64) error {
 	deleteQuery := fmt.Sprintf(`UPDATE %s SET status_id=(SELECT id
-          														FROM product_status
+          														FROM %s
           														WHERE "name"='inactive')
           								WHERE id=$1`,
-		productTable)
+		productTable, productsStatusTable)
 
 	_, err := p.db.Exec(deleteQuery, id)
 	return err

@@ -7,7 +7,7 @@ import (
 )
 
 func (h *Handler) addProduct(c *gin.Context) {
-	var product model.ProductDTO
+	var product model.Product
 	if err := c.BindJSON(&product); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -19,7 +19,7 @@ func (h *Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, map[string]interface{}{
+	newStatusResponse(c, map[string]interface{}{
 		"id": id,
 	})
 }
@@ -31,7 +31,7 @@ func (h *Handler) getProducts(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, products)
+	newStatusResponse(c, products)
 }
 
 func (h *Handler) findProductById(c *gin.Context) {
@@ -47,7 +47,7 @@ func (h *Handler) findProductById(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, product)
+	newStatusResponse(c, product)
 }
 
 func (h *Handler) findProductByName(c *gin.Context) {
@@ -63,7 +63,7 @@ func (h *Handler) findProductByName(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, product)
+	newStatusResponse(c, product)
 }
 
 func (h *Handler) findProductsByCategoryId(c *gin.Context) {
@@ -79,7 +79,7 @@ func (h *Handler) findProductsByCategoryId(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, products)
+	newStatusResponse(c, products)
 }
 
 func (h *Handler) findProductByCategoryName(c *gin.Context) {
@@ -95,7 +95,7 @@ func (h *Handler) findProductByCategoryName(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, products)
+	newStatusResponse(c, products)
 }
 
 func (h *Handler) findProductsByLocationId(c *gin.Context) {
@@ -111,7 +111,7 @@ func (h *Handler) findProductsByLocationId(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, products)
+	newStatusResponse(c, products)
 }
 
 func (h *Handler) findProductByLocation(c *gin.Context) {
@@ -127,7 +127,7 @@ func (h *Handler) findProductByLocation(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, products)
+	newStatusResponse(c, products)
 }
 
 func (h *Handler) findProductsByStatusId(c *gin.Context) {
@@ -143,7 +143,7 @@ func (h *Handler) findProductsByStatusId(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, products)
+	newStatusResponse(c, products)
 }
 
 func (h *Handler) findProductByStatusName(c *gin.Context) {
@@ -159,7 +159,7 @@ func (h *Handler) findProductByStatusName(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, products)
+	newStatusResponse(c, products)
 }
 
 func (h *Handler) updateProduct(c *gin.Context) {
@@ -180,7 +180,7 @@ func (h *Handler) updateProduct(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, map[string]interface{}{"status": "ok"})
+	newStatusResponse(c, map[string]interface{}{"status": "ok"})
 }
 
 func (h *Handler) deleteProduct(c *gin.Context) {
@@ -195,5 +195,5 @@ func (h *Handler) deleteProduct(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, map[string]interface{}{"status": "ok"})
+	newStatusResponse(c, map[string]interface{}{"status": "ok"})
 }
