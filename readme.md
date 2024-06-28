@@ -17,7 +17,7 @@ docker run --name=ims-product-db -e POSTGRES_PASSWORD='qwerty' -p 5432:5432 --rm
 make migrate
 ```
 или
-``cmd
+```cmd
 migrate -path ./schema -database 'postgres://postgres:qwerty@0.0.0.0:5432/postgres?sslmode=disable' up
 ```
 Приложение
