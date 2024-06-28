@@ -51,7 +51,7 @@ create table "order"
 create table order_item
 (
     id         bigserial primary key,
-    supply_id  bigint not null references "order" (id),
+    order_id  bigint not null references "order" (id),
     product_id bigint not null references product (id),
     quantity   bigint not null
 );

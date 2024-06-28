@@ -187,19 +187,19 @@ func mapProductToDtoList(s *ProductService, products []model.Product) ([]model.P
 
 	dtos := make([]model.ProductDTO, len(products))
 	for i, product := range products {
-		cat, err := findCategoryById(categories, dtos[i].Category.Id)
+		cat, err := findCategoryById(categories, products[i].CategoryId)
 		if err != nil {
 			logrus.Error(err)
 			return nil, err
 		}
 
-		loc, err := findLocationById(locations, dtos[i].Location.Id)
+		loc, err := findLocationById(locations, products[i].LocationId)
 		if err != nil {
 			logrus.Error(err)
 			return nil, err
 		}
 
-		stat, err := findStatusById(statuses, dtos[i].Status.Id)
+		stat, err := findStatusById(statuses, products[i].StatusId)
 		if err != nil {
 			logrus.Error(err)
 			return nil, err
@@ -250,6 +250,7 @@ func mapProductToDto(s *ProductService, product model.Product) (model.ProductDTO
 
 func findCategoryById(cats []model.Category, id int64) (model.Category, error) {
 	for _, cat := range cats {
+		logrus.Info(cat.Id, " - ", id)
 		if cat.Id == id {
 			return cat, nil
 		}
