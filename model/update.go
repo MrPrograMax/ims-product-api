@@ -20,7 +20,7 @@ type UpdateLocation struct {
 }
 
 type UpdateCategory struct {
-	Name *string `json:"name"`
+	Name *string `json:"name" binding:"required"`
 }
 
 func Verify(item interface{}) error {

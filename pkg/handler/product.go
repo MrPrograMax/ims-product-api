@@ -6,6 +6,17 @@ import (
 	"net/http"
 )
 
+// addProduct godoc
+// @Summary Post product
+// @Description Post a new product with info
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param input body model.Product true "Product info"
+// @Success 200 {integer} int
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product [post]
 func (h *Handler) addProduct(c *gin.Context) {
 	var product model.Product
 	if err := c.BindJSON(&product); err != nil {
@@ -24,6 +35,16 @@ func (h *Handler) addProduct(c *gin.Context) {
 	})
 }
 
+// getLocations godoc
+// @Summary Get Products
+// @Description Get list of existing products
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product [get]
 func (h *Handler) getProducts(c *gin.Context) {
 	products, err := h.product.Product.GetAll()
 	if err != nil {
@@ -34,6 +55,17 @@ func (h *Handler) getProducts(c *gin.Context) {
 	newStatusResponse(c, products)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get product by id
+// @Description Get existing product by its id
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param id path int true "Product ID"
+// @Success 200 {object} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/id/{id} [get]
 func (h *Handler) findProductById(c *gin.Context) {
 	id, err := validateId(c)
 	if err != nil {
@@ -50,6 +82,17 @@ func (h *Handler) findProductById(c *gin.Context) {
 	newStatusResponse(c, product)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get product by name
+// @Description Get existing product by its name
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param name path string true "Product Name"
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/name/{name} [get]
 func (h *Handler) findProductByName(c *gin.Context) {
 	name, err := validateString(c, "name")
 	if err != nil {
@@ -66,6 +109,17 @@ func (h *Handler) findProductByName(c *gin.Context) {
 	newStatusResponse(c, product)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get products by category id
+// @Description Get list of existing product by id of category belonging to product
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param id path int true "Category ID"
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/category_id/{id} [get]
 func (h *Handler) findProductsByCategoryId(c *gin.Context) {
 	id, err := validateId(c)
 	if err != nil {
@@ -82,6 +136,17 @@ func (h *Handler) findProductsByCategoryId(c *gin.Context) {
 	newStatusResponse(c, products)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get products by row and place
+// @Description Get list of existing products by name of category belonging to product
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param name path string true "Category Name"
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/category_name/{name} [get]
 func (h *Handler) findProductByCategoryName(c *gin.Context) {
 	name, err := validateString(c, "name")
 	if err != nil {
@@ -98,6 +163,17 @@ func (h *Handler) findProductByCategoryName(c *gin.Context) {
 	newStatusResponse(c, products)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get products by location id
+// @Description Get existing product by id of location belonging to product
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param id path int true "Location ID"
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/loc/{id} [get]
 func (h *Handler) findProductsByLocationId(c *gin.Context) {
 	id, err := validateId(c)
 	if err != nil {
@@ -114,6 +190,17 @@ func (h *Handler) findProductsByLocationId(c *gin.Context) {
 	newStatusResponse(c, products)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get products by location
+// @Description Get list of existing products by location belonging to product
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param input body model.Location true "Location info"
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/loc [get]
 func (h *Handler) findProductByLocation(c *gin.Context) {
 	var loc model.Location
 	if err := c.BindJSON(&loc); err != nil {
@@ -130,6 +217,17 @@ func (h *Handler) findProductByLocation(c *gin.Context) {
 	newStatusResponse(c, products)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get products by status id
+// @Description Get list of existing products by id of status belonging to product
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param id path int true "Status ID"
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/status/{id} [get]
 func (h *Handler) findProductsByStatusId(c *gin.Context) {
 	id, err := validateId(c)
 	if err != nil {
@@ -146,6 +244,17 @@ func (h *Handler) findProductsByStatusId(c *gin.Context) {
 	newStatusResponse(c, products)
 }
 
+// findLocationByRowAndPlace godoc
+// @Summary Get products by status name
+// @Description Get list of existing products by id of status belonging to product
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param name path string true "Status Name"
+// @Success 200 {array} model.Product
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/status_name/{name} [get]
 func (h *Handler) findProductByStatusName(c *gin.Context) {
 	name, err := validateString(c, "name")
 	if err != nil {
@@ -162,6 +271,18 @@ func (h *Handler) findProductByStatusName(c *gin.Context) {
 	newStatusResponse(c, products)
 }
 
+// addLocation godoc
+// @Summary Update product
+// @Description Update existing product with new info
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param id path int true "Product ID"
+// @Param input body model.UpdateProduct true "Product Info"
+// @Success 200 {object} handler.statusResponse
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/{id} [put]
 func (h *Handler) updateProduct(c *gin.Context) {
 	id, err := validateId(c)
 	if err != nil {
@@ -180,9 +301,20 @@ func (h *Handler) updateProduct(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, map[string]interface{}{"status": "ok"})
+	newStatusResponse(c, statusResponse{"ok"})
 }
 
+// deleteLocation godoc
+// @Summary Delete product
+// @Description Delete product by its id
+// @Tags Product
+// @Accept json
+// @Produce json
+// @Param id path int true "Product ID"
+// @Success 200 {object} handler.statusResponse
+// @Failure 400 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Router /product/{id} [delete]
 func (h *Handler) deleteProduct(c *gin.Context) {
 	id, err := validateId(c)
 	if err != nil {
@@ -195,5 +327,5 @@ func (h *Handler) deleteProduct(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, map[string]interface{}{"status": "ok"})
+	newStatusResponse(c, statusResponse{"ok"})
 }
