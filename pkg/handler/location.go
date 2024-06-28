@@ -19,7 +19,7 @@ func (h *Handler) addLocation(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, map[string]interface{}{
+	newStatusResponse(c, map[string]interface{}{
 		"id": id,
 	})
 }
@@ -31,7 +31,7 @@ func (h *Handler) getLocations(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, locations)
+	newStatusResponse(c, locations)
 }
 
 func (h *Handler) findLocationByRow(c *gin.Context) {
@@ -47,7 +47,7 @@ func (h *Handler) findLocationByRow(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, locations)
+	newStatusResponse(c, locations)
 }
 
 func (h *Handler) findLocationById(c *gin.Context) {
@@ -63,7 +63,7 @@ func (h *Handler) findLocationById(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, product)
+	newStatusResponse(c, product)
 }
 
 func (h *Handler) findLocationByRowAndPlace(c *gin.Context) {
@@ -85,7 +85,7 @@ func (h *Handler) findLocationByRowAndPlace(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, location)
+	newStatusResponse(c, location)
 }
 
 func (h *Handler) deleteLocation(c *gin.Context) {
@@ -100,5 +100,5 @@ func (h *Handler) deleteLocation(c *gin.Context) {
 		return
 	}
 	
-	newStatusResponse(c, http.StatusOK, map[string]interface{}{"status": "ok"})
+	newStatusResponse(c, map[string]interface{}{"status": "ok"})
 }

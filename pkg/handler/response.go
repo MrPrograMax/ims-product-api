@@ -19,7 +19,13 @@ func newErrorResponse(c *gin.Context, statusCode int, message string) {
 	c.AbortWithStatusJSON(statusCode, errorResponse{message})
 }
 
-func newStatusResponse(c *gin.Context, statusCode int, json any) {
-	logrus.Info(statusCode, json)
+func newStatusResponse(c *gin.Context, json any) {
+	if json == nil {
+		logrus.Info(http.StatusNoContent, json)
+		c.Status(http.StatusNoContent)
+		return
+	}
+
+	logrus.Info(http.StatusOK, json)
 	c.JSON(http.StatusOK, json)
 }

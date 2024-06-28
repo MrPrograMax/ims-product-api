@@ -3,7 +3,7 @@ package repository
 import (
 	"github.com/jmoiron/sqlx"
 	"ims-product-api/model"
-	"ims-product-api/pkg/repository/product_rep"
+	product_rep2 "ims-product-api/pkg/repository/postgres/product_rep"
 )
 
 type Product interface {
@@ -55,9 +55,9 @@ type ProductRepository struct {
 
 func NewProductRepository(db *sqlx.DB) *ProductRepository {
 	return &ProductRepository{
-		Product:       product_rep.NewProduct(db),
-		Category:      product_rep.NewCategory(db),
-		Location:      product_rep.NewLocation(db),
-		ProductStatus: product_rep.NewProductStatus(db),
+		Product:       product_rep2.NewProduct(db),
+		Category:      product_rep2.NewCategory(db),
+		Location:      product_rep2.NewLocation(db),
+		ProductStatus: product_rep2.NewProductStatus(db),
 	}
 }

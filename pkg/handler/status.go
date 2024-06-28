@@ -12,7 +12,7 @@ func (h *Handler) getProductStatuses(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, statuses)
+	newStatusResponse(c, statuses)
 }
 
 func (h *Handler) findProductStatusById(c *gin.Context) {
@@ -28,7 +28,7 @@ func (h *Handler) findProductStatusById(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, status)
+	newStatusResponse(c, status)
 }
 
 func (h *Handler) findProductStatusByName(c *gin.Context) {
@@ -44,5 +44,5 @@ func (h *Handler) findProductStatusByName(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, http.StatusOK, status)
+	newStatusResponse(c, status)
 }
