@@ -24,14 +24,12 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		product.GET("/id/:id", h.findProductById)
 
 		product.GET("/", h.getProducts)
-		//wrong paths
-		//product.GET("/category/:id", h.findProductsByCategoryId)
-		//product.GET("/category/:name", h.findProductByCategoryName)
+		product.GET("/category_id/", h.findProductsByCategoryId)
+		product.GET("/category_name/", h.findProductByCategoryName)
 		product.GET("/loc", h.findProductByLocation)
-		product.GET("/loc/:id", h.findProductsByLocationId)
-		//wrong paths
-		//product.GET("/status/:name", h.findProductByStatusName)
-		//product.GET("/status/:id", h.findProductsByStatusId)
+		product.GET("/loc_id/:id", h.findProductsByLocationId)
+		product.GET("/status_name/:name", h.findProductByStatusName)
+		product.GET("/status_id/:id", h.findProductsByStatusId)
 
 		product.PUT("/:id", h.updateProduct)
 
@@ -53,11 +51,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 			location.GET("/", h.getLocations)
 			location.GET("/row/:row", h.findLocationByRow)
-			//implemented twice. "/product/:id"
-			//product.DELETE("/:id", h.deleteLocation)
-			//new
 			location.DELETE("/:id", h.deleteLocation)
-
 		}
 
 		status := product.Group("/status")
