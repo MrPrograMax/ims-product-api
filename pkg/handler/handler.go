@@ -23,9 +23,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		product.GET("/name/:name", h.findProductByName)
 		product.GET("/id/:id", h.findProductById)
 
-		product.GET("/", h.getProducts)
-		product.GET("/category_id/", h.findProductsByCategoryId)
-		product.GET("/category_name/", h.findProductByCategoryName)
+		product.GET("", h.getProducts)
+		product.GET("/category_id/:id", h.findProductsByCategoryId)
+		product.GET("/category_name/:name", h.findProductByCategoryName)
 		product.GET("/loc", h.findProductByLocation)
 		product.GET("/loc_id/:id", h.findProductsByLocationId)
 		product.GET("/status_name/:name", h.findProductByStatusName)
@@ -37,7 +37,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 		category := product.Group("/category")
 		{
-			category.GET("/", h.getCategories)
+			category.GET("", h.getCategories)
 			category.GET("/name/:name", h.findCategoryByName)
 			category.GET("/id/:id", h.findCategoryById)
 		}
@@ -49,14 +49,14 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			location.GET("/row/:row/place/:place", h.findLocationByRowAndPlace)
 			location.GET("/id/:id", h.findLocationById)
 
-			location.GET("/", h.getLocations)
+			location.GET("", h.getLocations)
 			location.GET("/row/:row", h.findLocationByRow)
 			location.DELETE("/:id", h.deleteLocation)
 		}
 
 		status := product.Group("/status")
 		{
-			status.GET("/", h.getProductStatuses)
+			status.GET("", h.getProductStatuses)
 			status.GET("/name/:name", h.findProductStatusByName)
 			status.GET("/id/:id", h.findProductStatusById)
 		}
