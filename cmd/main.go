@@ -13,6 +13,18 @@ import (
 	"os"
 )
 
+
+//	@title			ims-products-api
+//	@version		1.0
+//	@description	API server for IMS application
+
+//	@host		localhost:8082
+//	@BasePath	/
+
+//	@securityDefinitions.apikey	ApiKeyAuth
+//  @in header
+//  @name Authorization
+
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 
