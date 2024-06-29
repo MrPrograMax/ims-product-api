@@ -14,6 +14,18 @@ type statusResponse struct {
 	Status string `json:"status"`
 }
 
+type idResponse struct {
+	Id int64 `json:"id"`
+}
+
+func toIdResponseSlice(ids []int64) []idResponse {
+	responses := make([]idResponse, len(ids))
+	for i, id := range ids {
+		responses[i] = idResponse{id}
+	}
+	return responses
+}
+
 func newErrorResponse(c *gin.Context, statusCode int, message string) {
 	logrus.Error(message)
 	c.AbortWithStatusJSON(statusCode, errorResponse{message})

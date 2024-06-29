@@ -5,6 +5,11 @@ definitions:
       message:
         type: string
     type: object
+  handler.idResponse:
+    properties:
+      id:
+        type: integer
+    type: object
   handler.statusResponse:
     properties:
       status:
@@ -30,6 +35,28 @@ definitions:
     required:
     - place
     - row
+    type: object
+  model.Order:
+    properties:
+      datetime:
+        type: string
+      id:
+        type: integer
+    type: object
+  model.OrderItem:
+    properties:
+      id:
+        type: integer
+      order_id:
+        type: integer
+      product:
+        type: integer
+      quantity:
+        type: integer
+    required:
+    - order_id
+    - product
+    - quantity
     type: object
   model.Product:
     properties:
@@ -64,6 +91,28 @@ definitions:
     required:
     - name
     type: object
+  model.Supply:
+    properties:
+      id:
+        type: integer
+      timestamp:
+        type: string
+    type: object
+  model.SupplyItem:
+    properties:
+      id:
+        type: integer
+      product:
+        type: integer
+      quantity:
+        type: integer
+      supply_id:
+        type: integer
+    required:
+    - product
+    - quantity
+    - supply_id
+    type: object
   model.UpdateProduct:
     properties:
       category_id:
@@ -79,13 +128,211 @@ definitions:
       status_id:
         type: integer
     type: object
-host: localhost:8082
+host: localhost:8081
 info:
   contact: {}
   description: API server for IMS application
   title: ims-products-api
   version: "1.0"
 paths:
+  /order:
+    get:
+      consumes:
+      - application/json
+      description: Get list of existing orders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Order'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Get Orders
+      tags:
+      - Order
+    post:
+      consumes:
+      - application/json
+      description: Post a new order
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.idResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Post order
+      tags:
+      - Order
+  /order/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete order by its id
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Delete order
+      tags:
+      - Order
+    get:
+      consumes:
+      - application/json
+      description: Get list of order items for specified order by order id
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.OrderItem'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Get order items by order id
+      tags:
+      - OrderItem
+  /order/item:
+    post:
+      consumes:
+      - application/json
+      description: Post a new product with info
+      parameters:
+      - description: OrderItem info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.OrderItem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handler.idResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Post order item
+      tags:
+      - OrderItem
+  /order/item/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete order item by its id
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Delete order item
+      tags:
+      - OrderItem
+  /order/product/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get list of order items for specified product by product id
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.OrderItem'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Get order items by product id
+      tags:
+      - OrderItem
   /product:
     get:
       consumes:
@@ -128,7 +375,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: integer
+            $ref: '#/definitions/handler.idResponse'
         "400":
           description: Bad Request
           schema:
@@ -483,7 +730,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: integer
+            $ref: '#/definitions/handler.idResponse'
         "400":
           description: Bad Request
           schema:
@@ -794,6 +1041,204 @@ paths:
       summary: Get products by status name
       tags:
       - Product
+  /supply:
+    get:
+      consumes:
+      - application/json
+      description: Get list of existing supplies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Supply'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Get Supplies
+      tags:
+      - Supply
+    post:
+      consumes:
+      - application/json
+      description: Post a new supply
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.idResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Post supply
+      tags:
+      - Supply
+  /supply/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete supply by its id
+      parameters:
+      - description: Supply ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Delete supply
+      tags:
+      - Supply
+    get:
+      consumes:
+      - application/json
+      description: Get list of supply items for specified supply by supply id
+      parameters:
+      - description: Supply ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.SupplyItem'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Get supply items by supply id
+      tags:
+      - SupplyItem
+  /supply/item:
+    post:
+      consumes:
+      - application/json
+      description: Post a new product with info
+      parameters:
+      - description: SupplyItem info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.SupplyItem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handler.idResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Post supply item
+      tags:
+      - SupplyItem
+  /supply/item/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete supply item by its id
+      parameters:
+      - description: SupplyItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Delete supply item
+      tags:
+      - SupplyItem
+  /supply/product/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get list of supply items for specified product by product id
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.SupplyItem'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Get supply items by product id
+      tags:
+      - SupplyItem
 securityDefinitions:
   ApiKeyAuth:
     in: header

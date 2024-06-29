@@ -18,7 +18,7 @@ import (
 //	@version		1.0
 //	@description	API server for IMS application
 
-//	@host		localhost:8082
+//	@host		localhost:8081
 //	@BasePath	/
 
 //	@securityDefinitions.apikey	ApiKeyAuth
@@ -48,9 +48,17 @@ func main() {
 		logrus.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
-	repo := repository.NewProductRepository(db)
-	serv := service.NewProductService(repo)
-	hand := handler.NewHandler(serv)
+	prodRepo := repository.NewProductRepository(db)
+	orderRepo := repository.NewOrderRepository(db)
+	supplyRepo := repository.NewSupplyRepository(db)
+
+	prodService := service.NewProductService(prodRepo)
+	authService := service.NewAuthService()
+	orderService := service.NewOrderService(orderRepo, prodRepo)
+	supplyService := service.NewSupplyService(supplyRepo, prodRepo)
+
+
+	hand := handler.NewHandler(prodService, authService, orderService, supplyService)
 
 	srv := new(api.Server)
 	if err := srv.Run(viper.GetString("port"), hand.InitRoutes()); err != nil {

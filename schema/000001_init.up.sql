@@ -64,4 +64,3 @@ insert into category(name)
 values ('Продукты'),
        ('Одежда'),
        ('Техника');
-

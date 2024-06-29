@@ -37,7 +37,7 @@ func (h *Handler) getCategories(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/category/id/{id} [get]
 func (h *Handler) findCategoryById(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return

@@ -12,10 +12,17 @@ import (
 type Handler struct {
 	product *service.ProductService
 	auth    *service.AuthService
+	order   *service.OrderService
+	supply  *service.SupplyService
 }
 
-func NewHandler(services *service.ProductService) *Handler {
-	return &Handler{product: services}
+func NewHandler(product *service.ProductService, auth *service.AuthService, order *service.OrderService, supply *service.SupplyService) *Handler {
+	return &Handler{
+		product: product,
+		auth: auth,
+		order: order,
+		supply: supply,
+		}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
@@ -67,6 +74,30 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			status.GET("/name/:name", h.findProductStatusByName)
 			status.GET("/id/:id", h.findProductStatusById)
 		}
+	}
+
+	order := router.Group("/order")
+	{
+		order.POST("", h.addOrder)
+		order.GET("", h.getOrders)
+		order.DELETE("/:id", h.deleteOrder)
+
+		order.POST("/item", h.addOrderItems)
+		order.GET("/:id", h.getOrderDetails)
+		order.GET("/product/:id", h.getProductOrders)
+		order.DELETE("/:id/item/:item_id", h.deleteOrderItem)
+	}
+
+	supply := router.Group("/supply")
+	{
+		supply.POST("", h.addSupply)
+		supply.GET("", h.getSupplies)
+		supply.DELETE("/:id", h.deleteSupply)
+
+		supply.POST("/item", h.addSupplyItems)
+		supply.GET("/:id", h.getSupplyDetails)
+		supply.GET("/product/:id", h.getProductSupplies)
+		supply.DELETE("/item/:id", h.deleteSupplyItem)
 	}
 
 	return router
