@@ -40,7 +40,7 @@ func (loc *Location) Create(location model.Location) (int64, error) {
 
 	if err = row.Scan(&id); err != nil {
 		logrus.Error(err)
-		if err = tx.Rollback(); err != nil {
+		if err := tx.Rollback(); err != nil {
 			logrus.Error(err)
 			return 0, err
 		}

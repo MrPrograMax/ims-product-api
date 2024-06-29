@@ -6,20 +6,20 @@ import (
 	"strconv"
 )
 
-func validateId(c *gin.Context) (int64, error) {
-	id, ok := c.Get("id")
+func validateInt(c *gin.Context, tag string) (int64, error) {
+	id, ok := c.Get(tag)
 	if !ok {
-		return 0, fmt.Errorf("param id not found")
+		return 0, fmt.Errorf("param %s not found", tag)
 	}
 
 	idStr, ok := id.(string)
 	if !ok {
-		return 0, fmt.Errorf("param id of invalid type")
+		return 0, fmt.Errorf("param %s of invalid type", tag)
 	}
 
 	idInt, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		return idInt, fmt.Errorf("param id of invalid type")
+		return idInt, fmt.Errorf("param %s of invalid type", tag)
 	}
 
 	return idInt, nil

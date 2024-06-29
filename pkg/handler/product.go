@@ -13,7 +13,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param input body model.Product true "Product info"
-// @Success 200 {integer} int
+// @Success 200 {object} handler.idResponse
 // @Failure 400 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Router /product [post]
@@ -30,9 +30,7 @@ func (h *Handler) addProduct(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, map[string]interface{}{
-		"id": id,
-	})
+	newStatusResponse(c, idResponse{Id: id})
 }
 
 // getLocations godoc
@@ -67,7 +65,7 @@ func (h *Handler) getProducts(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/id/{id} [get]
 func (h *Handler) findProductById(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -121,7 +119,7 @@ func (h *Handler) findProductByName(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/category_id/{id} [get]
 func (h *Handler) findProductsByCategoryId(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -175,7 +173,7 @@ func (h *Handler) findProductByCategoryName(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/loc/{id} [get]
 func (h *Handler) findProductsByLocationId(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -229,7 +227,7 @@ func (h *Handler) findProductByLocation(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/status/{id} [get]
 func (h *Handler) findProductsByStatusId(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -284,7 +282,7 @@ func (h *Handler) findProductByStatusName(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/{id} [put]
 func (h *Handler) updateProduct(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -316,7 +314,7 @@ func (h *Handler) updateProduct(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/{id} [delete]
 func (h *Handler) deleteProduct(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return

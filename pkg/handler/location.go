@@ -13,7 +13,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param input body model.Location true "Location info"
-// @Success 200 {integer} int
+// @Success 200 {object} handler.idResponse
 // @Failure 400 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Router /product/location [post]
@@ -30,9 +30,7 @@ func (h *Handler) addLocation(c *gin.Context) {
 		return
 	}
 
-	newStatusResponse(c, map[string]interface{}{
-		"id": id,
-	})
+	newStatusResponse(c, idResponse{Id: id})
 }
 
 // getLocations godoc
@@ -94,7 +92,7 @@ func (h *Handler) findLocationByRow(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/location/id/{id} [get]
 func (h *Handler) findLocationById(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -155,7 +153,7 @@ func (h *Handler) findLocationByRowAndPlace(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Router /product/location/{id} [delete]
 func (h *Handler) deleteLocation(c *gin.Context) {
-	id, err := validateId(c)
+	id, err := validateInt(c, "id")
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
